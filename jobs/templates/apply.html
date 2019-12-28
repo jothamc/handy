@@ -1,0 +1,37 @@
+{% extends "base_generic.html" %}
+{% load static humanize %}
+{% block title %}Apply for Job: {{contract.title|truncatechars:30}}{% endblock %}
+
+{% block content %}
+<section class="uk-height-small uk-background-secondary low-hero"></section>
+{# <section class="uk-background-secondary uk-padding"> #}
+{# </section> #}
+
+<section class="uk-container ">
+	<div class="uk-child-width-1-1" uk-grid>
+		<div class="uk-inline">
+			<div class="uk-box-shadow-small uk-padding">
+				<h4 class="uk-text-lead uk-text-large s-heading uk-margin-medium-bottom">{{contract.title}}</h4>
+
+				<form action="{% url "jobs:apply" contract.slug contract.id %}" method="POST" class="uk-form-stacked">
+				{% csrf_token %}
+					<label class="uk-form-label">Message <span class="uk-text-meta">(Optional)</span></label>
+					<div class="uk-form-controls">
+						{{form.message}}
+					</div>
+					<button type="submit" class="uk-button uk-button-primary uk-margin">Apply</button>
+				</form>
+				<div>
+					<p class=" uk-text-meta uk-text-bold">Job Description:</p>
+					<p class="">{{contract.description|truncatewords:10|default:"Not Set"}} <a href="{% url "jobs:detail" contract.slug contract.id %}">Read more</a></p>
+
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript">
+	$("textarea").addClass("uk-textarea")
+</script>
+{% endblock %}

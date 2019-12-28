@@ -1,0 +1,77 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Create Contract{% endblock %}
+
+{% block content %}
+<section class="uk-height-small uk-background-secondary low-hero"></section>
+<section class="uk-background-secondary uk-padding">
+	<h5 class="uk-heading-small s-heading uk-light">Create Contract</h5>
+</section>
+
+<section class="uk-container">
+	<div class="uk-section uk-padding">
+		
+		<form action="{% url "user:contract_create" %}" method="POST" class="uk-form-stacked">
+			{% csrf_token %}
+			<div class="uk-margin">
+				<label>Job Title</label>
+				<div class="uk-form-controls">
+					{{form.title}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Job Description</label>
+				<div class="uk-form-controls">
+					{{form.description}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Wage (Payment for one worker)</label>
+				<div class="uk-form-controls">
+					{{form.wage}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Job Type</label>
+				<div class="uk-form-controls">
+					{{form.work_type}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Occupations Needed</label>
+				<div class="uk-form-controls">
+					{{form.occupations}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Years of Experience required</label>
+				<div class="uk-form-controls">
+					{{form.years_of_experience}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Number of Workers Wanted</label>
+				<div class="uk-form-controls">
+					{{form.num_of_workers}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Job Location <span class="uk-icon" uk-icon="info"uk-tooltip="This is shown only to the worker(s) you hire for the job"></span></label>
+				<div class="uk-form-controls">
+					{{form.location}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<button type="submit" class="uk-button uk-button-secondary">Submit</button>
+			</div>
+		</form>
+	</div>
+
+</section>
+
+<script type="text/javascript">
+	$("input").addClass("uk-input")
+	$("textarea").addClass("uk-textarea")
+	$("select").addClass("uk-select")
+</script>
+{% endblock %}

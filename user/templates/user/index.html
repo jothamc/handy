@@ -1,0 +1,188 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}My Profile: {{user.get_full_name|default:user.username}}{% endblock%}
+
+{% block content %}	
+<section class="uk-height-small uk-background-primary low-hero"></section>
+	<section class="uk-background-primary uk-padding">
+		<h5 class="uk-heading-small s-heading">My Profile</h5>
+	</section>
+
+<section class="uk-container uk-padding-large uk-padding-remove-bottom">
+		<div uk-grid>
+			<div class="uk-inline uk-width-2-3">
+				<div class=" uk-padding uk-text-center">
+			{% if person.image %}
+				<div class="uk-overflow-hidden uk-border-circle uk-height-medium uk-width-medium uk-margin-auto uk-display-block uk-inline">
+					<div uk-lightbox>
+						<a href="{{person.image.url}}" data-caption="{{user.username}}" data-alt="{{user.username}}-profile-image">
+							<img src="{{person.image.url}}" class="uk-display-block uk-margin-auto uk-text-center">
+						</a>
+					</div>
+					<div class="uk-overlay uk-position-bottom-right uk-position-z-index">
+						<a href="{% url "user:edit_profile_image" %}" uk-tooltip="Edit Profile Image"  class="uk-icon-button uk-background-primary uk-light " uk-icon="icon:pencil;ratio:1.3"></a>
+					</div>
+				</div>					
+			{% else %}
+				<a href="{% url "user:edit_profile_image" %}" class="uk-text-center">
+					<span class="uk-icon uk-display-block" uk-icon="icon:image;ratio:8"></span>
+					<span class="uk-display-block">Add Profile Image</span>
+				</a>
+			{%endif%}
+					<h6 class="uk-text-lead s-heading uk-heading-line uk-text-center"><span>{{user.username}} ({% if user.is_client %}Client{% else %}Worker{% endif %} Account)</span></h6>
+				</div>
+			</div>
+			<div class="uk-background-muted uk-width-1-3 uk-padding">
+				<h6 class="uk-text-lead s-heading uk-heading-line uk-text-center">Overview</h6>
+				<div uk-grid>
+					<p class="uk-width-1-3 uk-text-meta uk-text-bold">Account:</p>
+					<p class="uk-width-2-3 uk-text-bold">
+						{% if user.is_client %}Client</p>{% else %}Worker
+					</p>
+					<p class="uk-width-1-3 uk-text-meta uk-text-bold">Overall Rating:</p>
+					<p class="uk-width-2-3 uk-text-bold">{{person.rating|default:"0.0"}}</p>
+					{% endif %}
+
+					<p class="uk-width-1-3 uk-text-meta uk-text-bold"># of Active Contracts:</p>
+					<p class="uk-width-2-3 uk-text-bold">{{active_contracts.count|default:"0"}}</p>
+						
+					<p class="uk-width-1-3 uk-text-meta uk-text-bold">
+					Number of Jobs {% if user.is_client %}Provided{% else %}Done{% endif %}:</p>
+					<p class="uk-width-2-3 uk-text-bold">{{contracts.count|default:"0"}}</p>
+				</div>
+			</div>
+		</div>
+
+	</section>
+	 
+	<section class="uk-container uk-padding-large uk-padding-remove-bottom">
+		<div uk-grid>
+			<div class="uk-inline uk-width-2-3">
+				<div class="uk-box-shadow-small uk-padding">
+					<a uk-tooltip="Edit Personal Details" href="{% url "user:edit_personal" %}" class="uk-icon-button uk-position-medium uk-position-top-right uk-background-primary uk-light" uk-icon="icon:pencil;ratio:1.3"></a>
+					<h6 class="uk-text-lead s-heading uk-heading-line"><span>Personal Details</span></h6>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">Username:</p>
+						<p class="uk-width-2-3 uk-text-bold">{{user.username}}</p>
+					</div>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">Last Name:</p>
+						<p class="uk-width-2-3 uk-text-bold">{{user.last_name|default:"Not Set"}}</p>
+					</div>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">First Name:</p>
+						<p class="uk-width-2-3 uk-text-bold">{{user.first_name|default:"Not Set"}}</p>
+					</div>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">Personal Email:</p>
+						<p class="uk-width-2-3 uk-text-bold">{{user.email|default:"Not Set"}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="uk-container uk-padding-large uk-padding-remove-bottom">
+		<div uk-grid>
+			<div class="uk-inline uk-width-2-3">
+				<div class="uk-box-shadow-small uk-padding">
+					<a uk-tooltip="Edit Contact Details" href="{% url "user:edit_contact" %}" class="uk-icon-button uk-position-medium uk-position-top-right uk-background-primary uk-light" uk-icon="icon:pencil;ratio:1.3"></a>
+					<h6 class="uk-text-lead s-heading uk-heading-line"><span>Contact Details</span></h6>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">Work Email:</p>
+						<p class="uk-width-2-3 uk-text-bold">{{user.email|default:"Not Set"}}</p>
+					</div>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">Phone:</p>
+						<p class="uk-width-2-3 uk-text-bold">{{person.phone|default:"Not Set"}}</p>
+					</div>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">Address (Only Visible to Current Clients):</p>
+						<p class="uk-width-2-3 uk-text-bold">{{person.address|default:"Not Set"}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	{% if user.is_client is False %}
+	<section class="uk-container uk-padding-large uk-padding-remove-bottom">
+		<div uk-grid>
+			<div class="uk-width-2-3 uk-inline">
+				<div class="uk-box-shadow-small uk-padding">
+					<a uk-tooltip="Edit Bank Account Details" href="{% url "user:edit_bank_account" %}" class="uk-icon-button uk-position-medium uk-position-top-right uk-background-primary uk-light" uk-icon="icon:pencil;ratio:1.3"></a>
+					<h6 class="uk-text-lead s-heading uk-heading-line"><span>Bank Account Details</span></h6>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">Account Number:</p>
+						<p class="uk-width-2-3 uk-text-bold">{{person.bank_account_number|default:"Not Set"}}</p>
+					</div>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">Account Name:</p>
+						<p class="uk-width-2-3 uk-text-bold">{{person.bank_account_name|default:"Not Set"}}</p>
+					</div>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">Bank Name:</p>
+						<p class="uk-width-2-3 uk-text-bold">{{person.get_bank_name_display|default:"Not Set"}}</p>
+					</div>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">Bank Verification Number (BVN):</p>
+						<p class="uk-width-2-3 uk-text-bold">{{person.bank_bvn|default:"Not Set"}}</p>
+					</div>
+				</div>
+			</div>
+		</div>		
+	</section>
+
+	<section class="uk-container uk-padding-large uk-padding-remove-bottom">
+		<div uk-grid>
+			<div class="uk-width-2-3 uk-inline">
+				<div class="uk-box-shadow-small uk-padding">
+					<a uk-tooltip="Edit Work Details" href="{% url "user:edit_occupations" %}" class="uk-icon-button uk-position-medium uk-position-top-right uk-background-primary uk-light" uk-icon="icon:pencil;ratio:1.3"></a>
+					<h6 class="uk-text-lead s-heading uk-heading-line"><span>Work Details</span></h6>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">Occupations:</p>
+						<p class="uk-width-2-3 uk-text-bold">{{person.occupation.all|join:", "|default:"Not Set"}}</p>
+					</div>
+					<div uk-grid>
+						<p class="uk-width-1-3 uk-text-meta uk-text-bold">Years of Experience:</p>
+						<p class="uk-width-2-3 uk-text-bold">{{person.years_of_experience|default:"Not Set"}}</p>
+					</div>
+				</div>
+			</div>
+		</div>		
+	</section>
+	{% endif %}
+
+<aside class="uk-padding">
+	<h6 class="s-heading uk-text-warning uk-text-center">All the fields in the sections above must be filled before you can be allowed to work or hire a worker</h6>
+</aside>
+						
+
+{% if user.is_client %}
+<section class="uk-container uk-padding-large uk-padding-remove-top">
+	<div uk-grid>
+		<div class="uk-width-2-3 uk-inline">
+			<div class="uk-box-shadow-small uk-padding">
+				<a uk-tooltip="Create New Contract" href="{% url "user:contract_create" %}" class="uk-icon-button uk-position-medium uk-position-top-right uk-background-primary uk-light" uk-icon="icon:plus;ratio:1"></a>
+				<h6 class="uk-text-lead s-heading uk-heading-line"><span>Contracts</span></h6>
+				<div uk-grid>
+					<a href="{% url "user:contracts" %}" class="uk-width-1-3 uk-text-meta uk-text-bold">Total Contracts:</a>
+					<a href="{% url "user:contracts" %}" class="uk-width-2-3 uk-text-bold">{{contracts.count}}</a>
+					<hr class="uk-width-1-1">
+
+					<a href="{% url "user:contracts" %}" class="uk-width-1-3 uk-text-meta uk-text-bold">Active Contracts:</a>
+					<a href="{% url "user:contracts" %}" class="uk-width-2-3 uk-text-bold">{{active_contracts.count|default:"0"}}</a>
+					<hr class="uk-width-1-1">
+
+					<a class="uk-width-1-3 uk-text-meta uk-text-bold">Contracts Not Started:</a>
+					<a class="uk-width-2-3 uk-text-bold">{{inactive_contracts.count|default:"0"}}</a>
+
+				</div>
+			</div>
+		</div>
+	</div>		
+</section>
+{% endif %}
+
+{% endblock %}

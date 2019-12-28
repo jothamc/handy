@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}HandyMan | Login{% endblock %}
+
+{% block content %}
+	<div class="uk-height-small uk-background-secondary low-hero"></div>
+  
+
+  <section class="uk-section uk-background-bottom-right uk-background-norepeat uk-background-contain" style="background-image:url({% static "images/carpenter.png" %})">
+  	
+  	<h3 class="uk-heading-small s-heading uk-text-left uk-width-1-1">Login into your HandyMan account</h3>
+  	<div class="uk-flex uk-flex-center">
+  		
+		<form action="{% url 'user:login' %}" method="POST" class="uk-section uk-background-muted uk-box-shadow-small uk-padding-large">
+		{% csrf_token %}
+			<div class="uk-margin">
+				<div class="uk-inline">
+					<span class="uk-form-icon" uk-icon="icon:user"></span>
+					<input class="uk-input" type="text" id="id_username" name="username" required autofocus placeholder="Username">
+				</div>
+			</div>
+
+			<div class="uk-margin">
+				<div class="uk-inline">
+					<span class="uk-form-icon" uk-icon="icon:lock"></span>
+					<input class="uk-input" type="password" id="id_password" name="password" required placeholder="Password">
+				</div>
+			</div>
+				
+		{% if form.errors %}
+			<p class="uk-text-danger">Username or password incorrect!</p>
+		{% endif %}
+			<button type="submit" class="uk-button-primary uk-button uk-button-large">Log In</button>
+			<input type="hidden" name="next" value="{{ next }}">
+			<a href="{% url "user:register" %}" class="uk-display-block uk-margin-top">Don't have an account yet?</a>
+		</form>
+
+  	</div>
+
+  </section>
+{% endblock %}

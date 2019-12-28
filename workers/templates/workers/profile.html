@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}{{worker.user.get_full_name|default:worker.user.username}}{% endblock %}
+
+{% block content %}
+	<section class="uk-height-small uk-background-primary low-hero"></section>
+	<section class="uk-background-primary uk-padding">
+		<h5 class="uk-heading-small s-heading">Worker <i>{{worker.user.username}}</i></h5>
+	</section>
+	
+	<section class="uk-container uk-padding-large">
+		
+		<p>Date Joined: {{ user.date_joined }}</p>
+		<p>Last Seen: {{ user.last_login }}</p>
+		Occupation: 
+			{% for occupation in worker.occupation.all %}
+				<a class="chip" href="{% url 'occupations:detail' occupation.slug %}">{{ occupation.name }}</a>
+			{% endfor %}
+
+		<p>Online Status: {{ worker.get_online_status_display }}</p>
+		<p>Work Status: {{ worker.get_work_status_display }}</p>
+	</section>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Workers{%endblock %}
+
+{% block content %}
+	<div 
+	class="uk-background-cover uk-height-large low-hero" id="navbar" 
+	style="background-image: url({% block hero_image %}{% static 'images/img7.jpeg' %} {% endblock %})">
+		<div class="uk-position-center uk-position-z-index" id="cover">
+			<div class="uk-position-relative ">
+		  	<h1 class="uk-heading-medium">You need a HandyMan, We present the best!</h1></span>
+			</div>
+		</div>
+		<div class="uk-overlay-primary uk-position-cover uk-height-large"></div>
+	</div>
+
+
+	<section class="uk-container uk-section">
+		<h3 class="uk-heading-small s-heading">All HandyMan Workers</h3>
+
+		<form class="uk-search uk-search-default" action="/workers" method="GET">
+	    <button type="submit" uk-search-icon class="uk-search-icon-flip"></button>
+  	  <input class="uk-search-input" type="search" placeholder="Search for Workers or Occupations">
+		</form>
+
+		{% for worker in workers.all %}
+			<p><a href="{{ worker.user.username }}">{{ worker.user.get_full_name|default:worker.user.username }}</a></p>
+		{% endfor %}
+		
+	</section>
+{% endblock %}

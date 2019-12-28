@@ -1,0 +1,68 @@
+
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Editing My Profile: {{user.get_full_name|default:user.username}}{% endblock%}
+
+{%block content%}
+	<section class="uk-height-small uk-background-secondary low-hero"></section>
+	<section class="uk-background-secondary uk-padding">
+		<h5 class="uk-heading-small s-heading uk-light">Edit Profile</h5>
+	</section>
+
+	{% if user.is_client is False %}
+
+	<section class="uk-container">
+		<div class="uk-section uk-padding-large uk-background-muted">
+
+		<form action="{% url "user:edit_bank_account" %}" method="POST" class="uk-form-stacked ">
+		{% csrf_token %}
+			<h6 class="uk-text-lead s-heading uk-heading-line "><span>Bank Account Details</span></h6>
+			<div uk-grid>
+				<div class="uk-width-1-2">
+					<label for="bank_name">Bank Name</label>
+					<div class="uk-form-controls">
+						<select class="uk-select" name="bank_name" id="bank_name" required>
+							<option disabled selected value>--Select your bank--</option>
+							{% for initials,name in worker.BANK_NAME %}
+								{% if initials == worker.bank_name %}
+									<option selected value="{{ initials }}">{{ name }}</option>
+								{% else %}
+									<option value="{{ initials }}">{{ name }}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="uk-width-1-2">
+					<label for="bank_bvn">Bank Verification Number (BVN)</label>
+					<div class="uk-form-controls">
+						<input class="uk-input" type="text" name="bank_bvn" value="{{worker.bank_bvn}}" id="bank_bvn">
+					</div>
+				</div>
+			</div>
+
+			<div uk-grid>
+				<div class="uk-width-1-2">
+					<label for="bank_account_name">Account Name</label>
+					<div class="uk-form-controls">
+						<input class="uk-input" type="text" name="bank_account_name" value="{{worker.bank_account_name}}" id="account_name">
+					</div>
+				</div>
+				<div class="uk-width-1-2">
+					<label for="bank_account_number">Account Number</label>
+					<div class="uk-form-controls">
+						<input class="uk-input" type="text" name="bank_account_number" value="{{worker.bank_account_number}}" id="bank_account_number" minlength="10">
+					</div>
+				</div>
+			</div>
+
+			<div class="uk-margin">
+				<button type="submit" class="uk-button uk-button-primary">Submit</button>
+			</div>
+		</form>
+	</div>
+</section>
+{% else %}<h3 class="uk-heading-small s-heading">This Page is Not For You<a class="uk-display-block" href="{% url "user:profile" %}">Click here to return to your profile</a></h3>
+{%endif%}
+
+{%endblock%}

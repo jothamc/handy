@@ -1,0 +1,31 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<section class="uk-background-primary low-hero uk-height-small">
+	
+</section>
+<section class="uk-background-primary uk-padding">
+	<h3 class="s-heading uk-heading-small">Notifications</h3>
+</section>
+
+<section class="uk-container">
+	<section class="uk-section">
+
+
+	{% for notification in notifications %}
+		{% if notification.seen == False %}
+		<p class="uk-box-shadow-small uk-border-rounded uk-padding uk-text-bold"><span class="uk-icon" uk-icon="icon:bell;ratio:1.2"></span>
+		{% else %}
+		<p class="uk-box-shadow-small uk-border-rounded uk-padding"><span class="uk-icon" uk-icon="bell"></span>
+		{% endif %}
+			{{ notification }}
+			<span class="uk-text-right uk-text-small uk-text-meta uk-display-block"><span class="uk-icon" uk-icon="calendar"></span>{{notification.datetime}}</span>
+		</p>
+	{% empty %}
+		<h4 class="s-heading">No notifications</h4>
+	{% endfor %}
+	</section>
+</section>
+{% endblock %}

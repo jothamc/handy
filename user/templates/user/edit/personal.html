@@ -1,0 +1,47 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Editing My Profile: {{person.full_name|default:user.username}}{% endblock%}
+
+{%block content%}
+	<section class="uk-height-small uk-background-secondary low-hero"></section>
+	<section class="uk-background-secondary uk-padding">
+		<h5 class="uk-heading-small s-heading uk-light">Edit Profile</h5>
+	</section>
+
+	<section class="uk-container">
+		<div class="uk-section uk-padding-large uk-background-muted">
+
+		<form action="{% url "user:edit_personal" %}" method="POST" class="uk-form-stacked ">
+		{% csrf_token %}
+			<h6 class="uk-text-lead s-heading uk-heading-line "><span>Personal Details</span></h6>
+			<div uk-grid>
+				<div class="uk- uk-width-1-2">
+					<label for="first_name">First Name</label>
+					<div class="uk-form-controls">
+						<input class="uk-input" type="text" name="first_name" value="{{person.first_name}}" id="first_name" required>
+					</div>
+				</div>
+				<div class="uk- uk-width-1-2">
+					<label for="last_name">Last Name</label>
+					<div class="uk-form-controls">
+						<input class="uk-input" type="text" name="last_name" value="{{person.last_name}}" id="last_name" required>
+					</div>
+				</div>
+			</div>
+
+			<div uk-grid>
+				<div class="uk- uk-width-1-2">
+					<label for="email">Personal Email <span class="uk-icon" uk-icon="info" uk-tooltip="(This is how we contact you, not for your {%if user.is_client %}workers{% else %}clients{% endif %}"></span></label>
+					<div class="uk-form-controls">
+						<input class="uk-input" type="email" name="email" value="{{person.email}}" id="email" required>
+					</div>
+				</div>
+			</div>
+
+			<div class="uk-margin">
+				<button type="submit" class="uk-button uk-button-primary">Submit</button>
+			</div>
+		</form>
+	</div>
+</section>
+{%endblock%}

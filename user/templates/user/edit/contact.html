@@ -1,0 +1,62 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Editing My Profile: {{user.get_full_name|default:user.username}}{% endblock%}
+
+{%block content%}
+	<section class="uk-height-small uk-background-secondary low-hero"></section>
+	<section class="uk-background-secondary uk-padding">
+		<h5 class="uk-heading-small s-heading uk-light">Edit Profile</h5>
+	</section>
+
+	<section class="uk-container">
+		<div class="uk-section uk-padding-large uk-background-muted">
+
+		<form action="{% url "user:edit_contact" %}" method="POST" class="uk-form-stacked">
+		{% csrf_token %}
+			<h6 class="uk-text-lead s-heading uk-heading-line "><span>Contact Details</span></h6>
+			<div uk-grid>
+				<div class="uk-width-1-2">
+					<label for="phone">Phone Number</label>
+					<div class="uk-form-controls">
+						{{form.phone}}
+					</div>
+				</div>
+				<div class="uk-width-1-2">
+					<label for="work_email">Work Email <span class="uk-icon" uk-icon="info" uk-tooltip="This is how your {%if user.is_client %}workers{% else %}clients{% endif %} contact you, if enabled [Not a good idea]"></span></label>
+					<div class="uk-form-controls">
+						{{form.work_email}}
+					</div>
+				</div>
+			</div>
+
+			<div uk-grid>
+				<div class="uk-width-1-1">
+					<label for="state">Home Address</label>
+					<div class="uk-form-controls">
+						{{form.home}}
+					</div>
+				</div>
+				<div class="uk-width-1-2">
+					<label for="city">City</label>
+					<div class="uk-form-controls">
+						{{form.city}}
+					</div>
+				</div>
+				<div class="uk-width-1-2">
+					<label for="state">State</label>
+					<div class="uk-form-controls">
+						{{form.state}}
+					</div>
+				</div>
+			</div>
+
+			<div class="uk-margin">
+				<button type="submit" class="uk-button uk-button-primary">Submit</button>
+			</div>
+		</form>
+	</div>
+</section>
+<script type="text/javascript">
+	$('input').addClass('uk-input')
+</script>
+{%endblock%}

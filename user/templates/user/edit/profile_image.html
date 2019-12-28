@@ -1,0 +1,89 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Editing My Profile: {{user.get_full_name|default:user.username}}{% endblock%}
+
+{%block content%}
+	<section class="uk-height-small uk-background-secondary low-hero"></section>
+	<section class="uk-background-secondary uk-padding">
+		<h5 class="uk-heading-small s-heading uk-light">Edit Profile</h5>
+	</section>
+
+	<section class="uk-container">
+		<div class="uk-section uk-padding-large uk-background-muted">
+
+		<form action="{% url "user:edit_profile_image" %}" method="POST" class="uk-form-stacked" enctype="multipart/form-data">
+		{% csrf_token %}
+			<h6 class="uk-text-lead s-heading uk-heading-line "><span>Profile Image</span></h6>
+			
+			{{form.image}}
+
+			<div class="js-upload uk-placeholder uk-text-center">
+		    <span uk-icon="icon: cloud-upload"></span>
+		    <span class="uk-text-middle">Upload your profile image by dropping an image here or</span>
+		    <div uk-form-custom>
+	        <input type="file">
+	        <span class="uk-link">selecting one</span>
+		    </div>
+			</div>
+
+			<progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+
+		</form>
+	</div>
+</section>
+<script>
+	function getCookie(name) {
+		var cookieValue = null;
+		if (document.cookie && document.cookie !== '') {
+			var cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = jQuery.trim(cookies[i]);
+				// Does this cookie string begin with the name we want?
+				if (cookie.substring(0, name.length + 1) === (name + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+	var csrftoken = getCookie('csrftoken');
+
+  var bar = document.getElementById('js-progressbar');
+
+  UIkit.upload('.js-upload', {
+    url: '{% url "user:edit_profile_image" %}',
+		mime: 'image/*',
+    name: 'image',
+    beforeSend: function(environment) {
+			environment.xhr.onreadystatechange = function () {
+				if (environment.xhr.readyState == 1){
+					environment.xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				}
+			}
+		},
+		loadStart: function (e) {
+		  bar.removeAttribute('hidden');
+		  bar.max = e.total;
+		  bar.value = e.loaded;
+		},
+		progress: function (e) {
+		  bar.max = e.total;
+		  bar.value = e.loaded;
+		},
+		loadEnd: function (e) {
+		  bar.max = e.total;
+		  bar.value = e.loaded;
+		},
+		completeAll: function () {
+			setTimeout(function () {
+		    bar.setAttribute('hidden', 'hidden');
+		  }, 1000);
+		  alert('Upload Completed');
+		  window.location = "http://localhost:8000/user/"
+		}
+
+  });
+
+</script>
+{%endblock%}

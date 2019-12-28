@@ -1,0 +1,192 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+	
+	<div class="uk-inline uk-width-1-1 low-hero">
+		<div class="uk-background-cover" style="background-image:url(/static/images/img1-1.jpeg)" uk-height-viewport>
+			<div class="uk-position-cover uk-overlay uk-overlay-primary" id="cover">
+				<div class="uk-position-center">
+					<h1 class="uk-heading-medium">You need a guy for the job?</h1>
+			  	<span class="uk-text-lead">Well, you're in luck!   We've got them all!!</span>
+				  <a href='{% url 'workers:all' %}' class="uk-display-block round-button">
+			  		<i class="fa fa-search"></i> 
+			  		Get a HandyMan
+			  	</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<section class="uk-section uk-section-muted uk-section-large" id="s-1">
+	<div class="uk-container">
+	<div class="uk-child-width-1-2" uk-grid>
+		<div class="uk-padding">
+			<h3 class="uk-heading-small s-heading ">Best HandyMen</h3>
+			<p class="uk-text-lead sub-heading">We the HandyMan people get fresh jobs wey go blow your mind</p>
+			<p>In all of Eastern Nigeria, our HandyMen have been proven to be the best and most reliable workers. We have a reason why it remains so</p>
+			<a href="#" class="round-button">Know More About Us</a>
+		</div>
+		<div>
+			<img src='{% static "/images/img8.jpg" %}'>
+		</div>
+	</div>
+	</div>
+</section>
+
+<section class="uk-section uk-section-secondary uk-section-large" id="q-1">
+	<div class="uk-container">
+		<h3 class="uk-heading-small s-heading  uk-heading-line uk-text-right uk-padding"><span>Why You Should Trust Us?</span></h3>
+		<div class='uk-child-width-1-3' uk-grid>
+	    <div class="">
+	      <a href='#'>
+	        <img class="uk-border-circle" width=250 height=250 src='{% static "/images/hammer-icon.png" %}'  alt='carpentry'/>
+	      	<h4 class='card-title'>Security</h4>
+	      </a>
+	      <p>We employ high standard security checks and measures to ensure our HandyMen are accountable. We verify their records via their BVNs which is provided upon registration.
+	      </p>
+	    </div>
+
+    <div class="">
+	    <a href='#'>
+	      <img class="uk-border-circle" width=250 height=250 src='{% static "images/plier1-icon.png" %}' alt='carpentry'/>
+	    	<h4 class='card-title'>Two-way Authentication</h4>
+	    </a>
+	    <p>Payments for job(s) done is/are not transferred till both the client and the HandyMan indicate that the work is completed. So, your money is not running anywhere.
+	    </p>
+	  </div>
+
+    <div class="">
+	    <a href='#'>
+	      <img class="uk-border-circle" width=250 height=250 src='{% static "images/constructor-icon.png" %}' alt='carpentry'/>
+		    <h4 class='card-title'>Quality Work</h4>
+	    </a>
+		  <p>Our handymen are the best that can be found anywhere. Various screening processes ensure we pick the best for you. You sure can trust us.
+	  	</p>
+	  </div>
+	</div>
+	<div class="uk-text-center uk-margin uk-padding">
+		<a href="#" class="round-button">More Reasons ...</a>
+	</div>
+
+</section>
+
+<section class="uk-background-cover uk-background-fixed uk-section" style="background-image: url({% static "images/img4.jpeg)" %}" uk-height-viewport>
+	
+	<div class="uk-container uk-text-right">
+		<div class="uk-padding">
+			<h3 class="uk-heading-small s-heading ">Are you a HandyMan?</h3>
+			<p class="uk-text-lead sub-heading">You have skills that are needed here</p>
+			<p>Join the HandyMan family <br>
+			Get paid for doing good jobs<br>
+			No hassles or issues here. Just work and be paid!</p>
+			<a href="#" class="round-button">Join Now</a>
+		</div>
+	</div>
+</section>
+
+<section class="uk-section" id="o-1" uk-height-viewport>
+	<h3 class="uk-heading-small uk-heading-line uk-text-center uk-margin s-heading"><span>Our HandyMen</span></h3>
+	<div class="uk-container">
+	<div class="uk-child-width-1-4" uk-grid="masonry:true">
+
+		<div>
+			<div class="uk-card uk-card-default uk-card-hover uk-card-small">
+			<div class="uk-card-media-top">
+				<img src="{% static "images/plumber.png" %}">
+			</div>
+			<div class="uk-card-body">
+				<h3 class="uk-card-title">Plumbers</h3>
+			</div>
+			</div>
+		</div>
+		<div>
+			<div class="uk-card uk-card-default uk-card-hover uk-card-small">
+			<div class="uk-card-media-top">
+				<img src='{% static "images/mover.png" %}'>
+			</div>
+			<div class="uk-card-body">
+				<h3 class="uk-card-title">Movers</h3>
+			</div>
+			</div>
+		</div>
+		<div>
+			<div class="uk-card uk-card-default uk-card-hover uk-card-small">
+			<div class="uk-card-media-top">
+				<img src='{% static "images/farmer.png" %}'>
+			</div>
+			<div class="uk-card-body">
+				<h3 class="uk-card-title">Farmers</h3>
+			</div>
+			</div>
+		</div>
+		<div>
+			<div class="uk-card uk-card-default uk-card-hover uk-card-small">
+			<div class="uk-card-media-top">
+				<img src='{% static "images/miner.png" %}'>
+			</div>
+			<div class="uk-card-body">
+				<h3 class="uk-card-title">Miners</h3>
+			</div>
+			</div>
+		</div>
+		<div>
+			<div class="uk-card uk-card-default uk-card-hover uk-card-small">
+			<div class="uk-card-media-top">
+				<img src='{% static "images/painter.png" %}'>
+			</div>
+			<div class="uk-card-body">
+				<h3 class="uk-card-title">Painters</h3>
+			</div>
+			</div>
+		</div>
+		<div>
+			<div class="uk-card uk-card-default uk-card-hover uk-card-small">
+			<div class="uk-card-media-top">
+				<img src='{% static "images/electrician.png" %}'>
+			</div>
+			<div class="uk-card-body">
+				<h3 class="uk-card-title">Electricians</h3>
+			</div>
+			</div>
+		</div>
+		<div>
+			<div class="uk-card uk-card-default uk-card-hover uk-card-small">
+			<div class="uk-card-media-top">
+				<img src='{% static "images/carpenter.png" %}'>
+			</div>
+			<div class="uk-card-body">
+				<h3 class="uk-card-title">Carpenters</h3>
+			</div>
+			</div>
+		</div>
+		<div>
+			<div class="uk-card uk-card-default uk-card-hover uk-card-small">
+			<div class="uk-card-media-top">
+				<img src='{% static "images/mechanic.jpg" %}'>
+			</div>
+			<div class="uk-card-body">
+				<h3 class="uk-card-title">Mechanics</h3>
+			</div>
+			</div>
+		</div>
+		<div>
+			<div class="uk-card uk-card-default uk-card-hover uk-card-small">
+			<div class="uk-card-media-top">
+				<img src='{% static "images/bricklayer.png" %}'>
+			</div>
+			<div class="uk-card-body">
+				<h3 class="uk-card-title">Masons</h3>
+			</div>
+			</div>
+		</div>
+	</div>
+	<div class="uk-text-center uk-margin uk-padding">
+		<a href="#" class="round-button">See All HandyMen</a>
+	</div>
+	</div>
+</section>
+
+{% endblock %}

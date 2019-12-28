@@ -1,0 +1,50 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Editing My Profile: {{user.get_full_name|default:user.username}}{% endblock%}
+
+{%block content%}
+	<section class="uk-height-small uk-background-secondary low-hero"></section>
+	<section class="uk-background-secondary uk-padding">
+		<h5 class="uk-heading-small s-heading uk-light">Edit Profile</h5>
+	</section>
+
+	<section class="uk-container">
+		<div class="uk-section uk-padding-large uk-background-muted">
+
+		<form action="{% url "user:edit_occupations" %}" method="POST" class="uk-form-stacked ">
+		{% csrf_token %}
+			<h6 class="uk-text-lead s-heading uk-heading-line "><span>Work Details</span></h6>
+			<div uk-grid>
+				<div class="uk- uk-width-3-4">
+				<label for="occupations">Occupation</label>
+				<div class="uk-form-controls">
+					<select multiple class="uk-select" name="occupation" id="occupations" required>
+						<option disabled value>--Select your Occupation--</option>
+						{% for occupation in occupations %}
+							{% if occupation in worker.occupation.all%}
+								<option selected value="{{ forloop.counter }}">{{ occupation.name }}</option>
+							{% else %}
+								<option value="{{ forloop.counter }}">{{ occupation.name }}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			<div class="uk- uk-width-1-4">
+				<label for="years_of_experience">Years of Experience <span class="uk-text-meta">(0 means less than a year)</span></label>
+				<div class="uk-form-controls">
+					<input class="uk-input" type="number" name="years_of_experience" value="{{worker.years_of_experience}}" id="years_of_experience" min="0">
+				</div>
+			</div>
+			</div>
+
+			<div class="uk-margin">
+				<button type="submit" class="uk-button uk-button-primary">Submit</button>
+			</div>
+		</form>
+
+		{{worker.occupation.all|join:", "}}
+		</p>
+	</div>
+</section>
+{%endblock%}

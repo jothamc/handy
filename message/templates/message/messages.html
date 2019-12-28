@@ -1,0 +1,46 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}My Messages{% endblock %}
+
+{% block content %}
+
+<section class="low-hero uk-background-secondary uk-height-small"></section>
+  
+  <section class="uk-background-secondary">
+  	<h4 class="s-heading uk-light uk-heading-small">Messages</h4>
+  </section>
+
+
+  <section class="uk-container">
+	 	<a><span class="uk-icon" uk-icon=""></span></a>
+
+	 	{{persons}}
+	 	{{count}}
+	  {% for message in messages %}
+	  {% if count.message.sender.username > 1 %}
+	  k
+	  {% endif %}
+	  <div class="uk-box-shadow-small uk-padding uk-margin">
+	  	<h5 class="s-heading"><span class="uk-icon" uk-icon="user"></span>  <a href="{{message.sender.username}}">{{message.sender.get_full_name|default:message.sender.username}}</a> 
+
+	  		<div class="uk-inline uk-float-right">
+			  	<span class="uk-icon" uk-icon="more-vertical"></span>
+			  	<div uk-dropdown>
+				  	<ul class="uk-iconnav uk-iconnav-vertical">
+				  		<li><a href=""><span uk-icon="reply"></span> Reply</a></li>
+				  		<li><a href=""><span uk-icon="check"></span> Mark as read</a></li>
+				  		<li><a href=""><span uk-icon="trash"></span> Delete</a></li>
+				  	</ul>
+			  	</div>
+			  
+			  </div>
+	  	</h5>
+
+	  	<p class="uk-float-right uk-text-small"><span class="uk-icon" uk-icon="calendar"></span>{{message.sent_on}}</p>
+	  	<p><span class="uk-icon" uk-icon="comment"></span>  {{message.body|truncatechars:150}}</p>
+	  </div>
+	  {% endfor %}
+
+  </section>
+
+{% endblock %}

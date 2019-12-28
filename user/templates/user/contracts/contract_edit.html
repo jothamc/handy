@@ -1,0 +1,77 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Editing Contract: {{contract.title}}{% endblock %}
+
+{% block content %}
+<section class="uk-height-small uk-background-secondary low-hero"></section>
+<section class="uk-background-secondary uk-padding">
+	<h5 class="uk-heading-small s-heading uk-light">Edit Contract: {{contract.title}}</h5>
+</section>
+
+<section class="uk-container">
+	<div class="uk-section uk-padding">
+		
+		<form action="{% url "user:contract_edit" contract.pk %}" method="POST" class="uk-form-stacked">
+			{% csrf_token %}
+			<div class="uk-margin">
+				<label>Job Title</label>
+				<div class="uk-form-controls">
+					{{form.title}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Job Description</label>
+				<div class="uk-form-controls">
+					{{form.description}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Wage (Payment for one worker)</label>
+				<div class="uk-form-controls">
+					{{form.wage}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Job Type</label>
+				<div class="uk-form-controls">
+					{{form.work_type}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Occupations Needed</label>
+				<div class="uk-form-controls">
+					{{form.occupations}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Number of Workers Wanted</label>
+				<div class="uk-form-controls">
+					{{form.num_of_workers}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<label>Job Location <span class="uk-icon" uk-icon="info" uk-tooltip="This is shown only to the worker(s) you hire for the job"></span></label>
+				<div class="uk-form-controls">
+					{{form.location}}
+				</div>
+			</div>
+			<div class="uk-margin">
+				<button type="submit" class="uk-button uk-button-secondary">Submit</button>
+			</div>
+			<div>
+				<p>Contract originally created on {{contract.created_on}}.</p>
+				{% if contract.created_on is not contract.edited_on %}
+				<p>Contract last edited on {{contract.edited_on}}</p>
+			</div>
+			{% endif %}
+		</form>
+	</div>
+
+</section>
+
+<script type="text/javascript">
+	$("#id_title,#id_wage,#id_num_of_workers,#id_location").addClass("uk-input")
+	$("#id_description").addClass("uk-textarea")
+	$("#id_work_type,#id_occupations").addClass("uk-select")
+</script>
+{% endblock %}

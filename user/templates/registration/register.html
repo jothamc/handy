@@ -1,0 +1,60 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Register A New Account | HandyMan{% endblock %}
+
+{% block content %}
+	<div class="uk-height-small uk-background-secondary low-hero"></div>
+
+  <section class="uk-section uk-background-bottom-right uk-background-norepeat uk-background-contain" style="background-image:url({% static "images/electrician.png" %})">
+  	
+  	<h3 class="uk-heading-small s-heading uk-text-left uk-width-1-1">Register A HandyMan account</h3>
+
+  	<div class="uk-flex uk-flex-center">
+  		
+			<form action="{% url 'user:register' %}" method="POST" class="uk-section uk-background-muted uk-box-shadow-small uk-padding-large">
+			{% csrf_token %}
+			<div class="uk-margin">
+				<div class="uk-inline uk-width-1-1">
+					<span class="uk-form-icon" uk-icon="icon:user"></span>
+					<input class="uk-input" type="text" id="id_username" name="username" maxlength="30" required autofocus placeholder="Username">
+				</div>
+				<span class="uk-display-block">Can only consist of letters, digits and @/./+/-/_ </span>
+			</div>
+			<div class="uk-margin">
+				<div class="uk-inline uk-width-1-1">
+					<span class="uk-form-icon" uk-icon="icon:lock"></span>
+					<input class="uk-input" type="password" id="id_password1" name="password1" required placeholder="Password">
+				</div>
+				{{form.password1.help_text}}
+			</div>
+			<div class="uk-margin">
+				<div class="uk-inline uk-width-1-1">
+					<span class="uk-form-icon" uk-icon="icon:lock"></span>
+					<input class="uk-input" type="password" id="id_password2" name="password2" required placeholder="Repeat Password">
+				</div>
+			</div>
+			<div class="uk-margin">
+				<div class="uk-inline uk-width-1-1">
+					<span class="uk-form-icon" uk-icon="icon:mail"></span>
+					<input class="uk-input" type="email" id="id_email" name="email" required placeholder="Email">
+				</div>
+			</div>
+			<div class="uk-margin">
+				<div class="uk-inline uk-width-1-1">
+					<label>
+						<input class="uk-radio" type="radio" id="id_is_client" name="is_client" value="">
+						Worker
+					</label>
+					<label>
+						<input class="uk-radio" type="radio" id="id_is_client" name="is_client" value="on">
+						Client
+					</label>
+				</div>
+			</div>
+			{% if error %}
+				<p class="uk-text-danger">{{form.errors}}</p>
+			{% endif %}
+			<button type="submit" class="uk-button uk-button-primary">Register New Account</button>
+		</div>
+		</form>
+	{% endblock %}

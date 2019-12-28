@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}"{{item}}" Jobs{% endblock %}
+
+{% block content %}
+<section class="uk-height-small uk-background-primary low-hero"></section>
+<section class="uk-background-primary uk-padding">
+	<h5 class="uk-heading-small s-heading uk-light">All Jobs with "{{item}}"</h5>
+</section>
+
+<section class="uk-container uk-padding-large">
+
+	<form class="uk-search uk-search-large uk-search-default uk-width-3-4 uk-margin" action="{% url "jobs:search" %}" method="GET">
+    <button type="submit" uk-search-icon class="uk-search-icon-flip"></button>
+	  <input class="uk-search-input uk-border-pill" type="search" placeholder="Search for Jobs or Occupations" name="filter" value="{{item}}">
+	</form>
+	<div uk-grid>
+		<section class="uk-width-3-4 uk-padding">
+		{% for contract in contracts %}
+			<article class="uk-section uk-box-shadow-small uk-margin uk-padding">
+				<div uk-grid>
+					<h6 class="s-heading uk-width-expand"><a href="{% url "jobs:detail" contract.slug contract.id %}">{{contract.title}}</a></h6>
+					<div class="notif-icons uk-width-auto">
+						{{contract.created_on|timesince}} ago
+					</div>
+					<p class="uk-width-1-1">{{contract.description|truncatewords:50}}</p>
+				</div>
+			</article>
+		{% endfor %}
+		</section>
+
+		<section class="uk-width-1-4 uk-background-secondary uk-light uk-padding uk-hidden">
+			<ul>Arrange by
+				<li>Date</li> 
+				<li>Payment</li> 
+			</ul>
+		</section>
+	</div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+{% load static humanize %}
+{% block title %}My Application for Job: {{application.contract.title|truncatechars:30}}{% endblock %}
+
+{% block content %}
+<section class="uk-height-small uk-background-secondary low-hero"></section>
+{# <section class="uk-background-secondary uk-padding"> #}
+{# </section> #}
+
+<section class="uk-container ">
+	<div class="uk-child-width-1-1" uk-grid>
+		<div class="uk-inline">
+			<div class="uk-box-shadow-small uk-padding">
+				<h4 class="uk-text-lead uk-text-large s-heading uk-margin-medium-bottom">Applied for <i><u>{{application.contract.title}}</u></i></h4>
+				<p class="uk-text-meta s-heading">My Message:</p>
+				<p>{{application.message}}</p>
+				<div>
+					<p class="uk-text-meta  uk-text-bold">Job Description:</p>
+					<p class="">{{application.contract.description|truncatewords:10|default:"Not Set"}}<a href="{% url "jobs:detail" application.contract.slug application.contract.id %}">Read more</a></p>
+
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript">
+	$("textarea").addClass("uk-textarea")
+</script>
+{% endblock %}

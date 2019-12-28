@@ -1,0 +1,34 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}My Profile: {{user.get_full_name|default:user.username}}{% endblock%}
+
+{% block content %}	
+<section class="uk-height-small uk-background-primary low-hero"></section>
+	<section class="uk-background-primary uk-padding">
+		<h5 class="uk-heading-small s-heading">My Contracts</h5>
+	</section>
+
+	<section class="uk-container uk-padding-large">
+		<div class="uk-text-right uk-margin-bottom uk-text-bold uk-text-meta">
+			<p>{{contracts.count}} contract{{contracts.count|pluralize}}</p>
+			<hr>
+		</div>
+		<ul uk-accordion="multiple:true; active:0">
+		{% for contract in contracts %}
+			<li uk-grid>
+				<span class="uk-accordion-title uk-width-expand">{{contract.title|truncatewords:20}}</span>
+					<span class="uk-float-right uk-width-auto">
+						<a href="{% url "user:contract_detail" contract.slug contract.pk %}" uk-icon="icon:info;ratio:1.8" class="uk-icon"></a>
+						<a href="{% url "user:contract_edit" contract.pk %}" uk-icon="pencil" class="uk-icon-button uk-background-primary uk-light"></a>
+						<a href="#" uk-icon="trash" class="uk-icon-button uk-background-secondary"></a>
+					</span>
+				<div class="uk-accordion-content uk-padding uk-padding-remove-vertical uk-text-small uk-text-meta uk-width-1-1">
+					{{contract.description}}
+					<p class="uk-text-bold">Created on {{contract.created_on}}</p>
+				<hr>
+				</div>
+			</li>
+		{% endfor %}
+		</ul>
+	</section>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% load humanize  %}
+{% block title %}Contract: {{applications.0.contract.title}} Applications{% endblock %}
+
+{% block content %}
+<section class="uk-height-small uk-background-secondary low-hero"></section>
+<section class="uk-background-secondary uk-padding">
+	<h5 class="uk-heading-small s-heading uk-light">Applications to Contract: {{applications.0.contract.title}}</h5>
+</section>
+
+<section class="uk-container uk-padding-large uk-padding-remove-top">
+	<div class="uk-child-width-1-1" uk-grid>
+		<div class="uk-inline">
+			<div class=" uk-padding">
+				<div uk-grid>
+					<p class="uk-text-center">{{applications.count}} application{{applications.count|pluralize}}</p>
+					{% for application in applications %}
+					<div class="uk-width-1-1 uk-box-shadow-small uk-padding" >
+						<p>
+							<span class="uk-icon" uk-icon="user"></span>
+							<a href="{% url "workers:detail" application.worker.user.username %}">{{application.worker.user.username}}</a>
+							<span>Applied on {{application.applied_on}}</span>
+							<div>
+								<span class="uk-icon" uk-icon="cog"></span>
+								{% for occupation in application.worker.occupation.all %}
+								<span class="chip" uk-tooltip="{{occupation.description}}">{{occupation}}</span>
+								{% empty %}
+								No Occupation set
+								{% endfor %}
+							</div>
+						</p>
+						<p><span class="uk-icon" uk-icon="location"></span> {{application.worker.address|default:"No Location Set"}}</p>
+						<p>
+							<span class="uk-icon" uk-icon="comment"></span>
+							{{application.message}} 
+						</p>
+						<input type="hidden" name="worker_username" value="{{application.worker.user.username}}">
+
+						{% if application.accepted == False %}
+
+						<form action="{% url "user:application_accept" application.contract.pk application.pk %}" method="POST" class="uk-display-inline-block">
+							{% csrf_token %}
+							<button class="uk-button-primary uk-button" type="submit"><span class="uk-icon" uk-icon="check"></span> Accept Worker</button>
+						</form>
+						<form action="{% url "user:application_deny" application.contract.pk application.pk %}" method="POST" class="uk-display-inline-block">
+							{% csrf_token %}
+							<button class="uk-button-danger uk-button" type="submit" formmethod="POST" formaction="{% url "user:application_deny" application.contract.pk application.pk %}"><span class="uk-icon" uk-icon="close"></span> Reject Worker</button>
+						</form>
+
+						{% else %}
+						<hr>
+						<p class="uk-text-bold">Application Accepted</p>
+
+						{% endif %}
+
+					</div>
+					<hr class="uk-width-1-1">
+					{% endfor %}
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

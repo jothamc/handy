@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>All Occupations</title>
+</head>
+<body>
+	<header>
+		<h3>All Occupations (Alphabetically Sorted)</h3>
+	</header>
+	<main>
+		<ul>
+		{% for occupation in occupations %}
+			<li><a href="{% url 'occupations:detail' occupation.slug %}">{{ occupation.name }}</a></li>
+		{% endfor %}
+	</main>
+</body>
+</html>

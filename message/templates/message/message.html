@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}Message - {{messages.0.sender}}{% endblock %}
+
+{% block content %}
+<section class="low-hero uk-background-primary uk-height-small"></section>
+
+<section class="uk-container uk-padding">
+	{% for message in messages %}
+	{% if message.sender.username == request.user.username %}
+		<div class="uk-flex uk-flex-right uk-margin-xlarge-left mine">
+	{% else %}
+		<div class="uk-flex uk-margin-xlarge-right yours">
+	{% endif %}
+		<div class="uk-background-primary uk-padding-small uk-margin uk-light uk-display-inline-block uk-border-rounded">
+			<p>{{message.body}}</p>
+			<span class="uk-text-small">
+				{{message.sent_on|time:"P"}}
+				{%if message.sent_on|naturalday != "today" %}{{message.sent_on|date:"d/m/Y"}}{% endif %}
+			</span>
+		</div>
+	</div>
+	{% endfor %}
+</section>
+
+<section class="uk-container uk-padding">
+	<form method="POST" action="{% url "message:send" messages.0.sender.username %}">
+		{% csrf_token %}
+		<textarea placeholder="Type your message" class="uk-textarea uk-border-rounded" name="body" autofocus></textarea>
+		{{form.errors}}
+		{{form.error}}
+		{{form.body}}
+		{{messagef.body}}
+		<div class="uk-align-center">
+			<button type="submit" class="uk-button uk-button-primary uk-border-rounded">Send</button>			
+		</div>
+	</form>
+</section>
+
+{% endblock %}

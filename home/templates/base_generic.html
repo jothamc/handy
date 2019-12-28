@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel='stylesheet' href='{% static "/css/uikit.min.css" %}' />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel='stylesheet' href="{% static 'styles.css' %}"/>
+	<script src='{% static "/js/jquery.min.js" %}'></script>
+	<script src='{% static "/js/uikit.min.js" %}'></script>
+	<script src='{% static "/js/uikit-icons.min.js" %}'></script>
+	<script src="{% static "/js/notificationsPoll.js" %}"></script>
+	<title>{% block title %}{% endblock title %} | HandyMan</title>
+</head>
+<body>
+
+	{% block nav %}
+    	<div uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent uk-light; top: 200">
+				<nav class="uk-navbar-container uk-navbar-transparent uk-position-z-index" uk-navbar>
+					<div class="uk-navbar-center">
+						<div class="uk-navbar-center-left">
+							<div>
+								<ul class="uk-navbar-nav">
+									<li><a href="{% url 'workers:all' %}">Get a HandyMan</a></li>
+									<li><a href="{% url 'user:login' %}">Be a HandyMan</a></li>
+									<li><a href="/jobs/">HandyMan Jobs</a></li>
+								</ul>
+							</div>
+						</div>
+						<a class="uk-navbar-item uk-logo" href="#">Logo</a>
+						<div class="uk-navbar-center-right">
+							<div>
+								<ul class="uk-navbar-nav">
+									<li><a href="#">About Us</a></li>
+									<li><a href="#">Contact Us</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					{% if user.is_authenticated %}
+					<div class="uk-navbar-right">
+						<ul class="uk-navbar-nav">
+							<li>
+								<div class="uk-navbar-item">
+									<a href="{% url "user:profile" %}" class="uk-icon-button" uk-icon="user"></a>
+									<div class="uk-navbar-dropdown">
+										<ul class="uk-nav uk-navbar-dropdown-nav">
+											<li class="uk-nav-header">{{user.username}}</li>
+											<li class="uk-nav-divider"></li>
+											<li><a href="{% url "message:list" %}"><span class="uk-icon" uk-icon="comments"></span> Messages</a></li>
+											{% if user.is_client %}
+											<li><a href="{% url "user:contracts" %}"><span class="uk-icon" uk-icon="bolt"></span> Contracts</a></li>
+											{% endif %}
+											<li><a href="{% url "notifications:list" %}" id="notifications">
+												<span uk-icon="bell" class="uk-icon"></span><span class="uk-text-small count uk-invisible"></span>
+														Notifications
+												</a>
+											</li>
+											<li><a href="{% url "settings:list" %}"><span class="uk-icon" uk-icon="settings"></span> Settings</a></li>
+											<li><a href="{% url "user:logout" %}"><span class="uk-icon" uk-icon="sign-out"></span> Logout</a></li>
+										</ul>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					{% endif %}
+				</nav>
+			</div>
+		{% endblock %}
+
+   <main>{% block content %}{% endblock %}</main>
+
+	 <footer>
+		<h3>HandyMan!</h3>
+		<p>Connect with us</p>
+		<a href="" class="uk-icon-button" uk-icon="twitter"></a>
+		<a href="" class="uk-icon-button" uk-icon="facebook"></a>
+		<a href="" class="uk-icon-button" uk-icon="instagram"></a>
+	</footer>
+ </body>
+ </html>
